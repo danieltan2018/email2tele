@@ -51,16 +51,17 @@ def process(lines):
     else:
         body = msg.get_payload(decode=True)
 
-    relay += unidecode(body.decode("utf-8")).strip()
+    body = unidecode(body.decode("utf-8")).strip()
 
-    relay = relay.replace('\r', '')
-    relay = re.sub('\n(?=\w)', ' ', relay)
-    relay = relay.replace('\n', '\n\n')
-    while ' \n' in relay:
-        relay = relay.replace(' \n', '\n')
-    while '\n\n\n' in relay:
-        relay = relay.replace('\n\n\n', '\n\n')
+    body = body.replace('\r', '')
+    body = re.sub('\n(?=\w)', ' ', body)
+    body = body.replace('\n', '\n\n')
+    while ' \n' in body:
+        body = body.replace(' \n', '\n')
+    while '\n\n\n' in body:
+        body = body.replace('\n\n\n', '\n\n')
 
+    relay += body
     return relay
 
 
@@ -85,12 +86,11 @@ def getmail():
     if index != latest:
         latest = index
         mail = process(lines)
+        send("INCOMING EMAIL TO yf@lifebpc.com")
         send(mail)
 
 
 def main():
-    send('Connecting to {} mail server...'.format(user))
-    getmail()
     schedule.every(5).to(10).minutes.do(getmail)
 
     while True:
