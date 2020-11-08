@@ -53,13 +53,11 @@ def process(lines):
 
     relay += unidecode(body.decode("utf-8")).strip()
 
+    relay = relay.replace('\r', '')
     relay = re.sub('\n(?=\w)', ' ', relay)
-
     relay = relay.replace('\n', '\n\n')
-
     while ' \n' in relay:
         relay = relay.replace(' \n', '\n')
-
     while '\n\n\n' in relay:
         relay = relay.replace('\n\n\n', '\n\n')
 
@@ -80,7 +78,6 @@ def getmail():
     server.pass_(pw)
     resp, mails, octets = server.list()
     index = len(mails)
-    index = 91
     resp, lines, octets = server.retr(index)
     server.quit()
 
