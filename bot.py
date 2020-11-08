@@ -84,7 +84,7 @@ def getmail():
 
     global latest
     if index != latest:
-        if index > 0:
+        if latest > 0:
             mail = process(lines)
             send("INCOMING EMAIL TO {}".format(user))
             send(mail)
