@@ -54,8 +54,6 @@ def process(lines):
     body = unidecode(body.decode("utf-8")).strip()
 
     body = body.replace('\r', '')
-    body = re.sub('\n(?=\w)', ' ', body)
-    body = body.replace('\n', '\n\n')
     while ' \n' in body:
         body = body.replace(' \n', '\n')
     while '\n\n\n' in body:
