@@ -92,6 +92,7 @@ def getmail():
 
 def main():
     schedule.every(5).to(10).minutes.do(getmail)
+    print("Running...")
 
     while True:
         schedule.run_pending()
