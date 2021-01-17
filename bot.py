@@ -6,6 +6,7 @@ from email.parser import Parser
 from unidecode import unidecode
 import re
 from params import *
+from datetime import datetime
 
 
 bot = telegram.Bot(token=bottoken)
@@ -89,13 +90,20 @@ def getmail():
         latest = index
 
 
+def handler():
+    try:
+        getmail()
+    except:
+        print("Failed at", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+
 def main():
-    schedule.every(5).to(10).minutes.do(getmail)
+    schedule.every(15).to(30).minutes.do(handler)
     print("Running...")
 
     while True:
         schedule.run_pending()
-        time.sleep(30)
+        time.sleep(60)
 
 
 if __name__ == '__main__':
